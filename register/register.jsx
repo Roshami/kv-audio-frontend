@@ -13,16 +13,6 @@ export default function RegisterPage() {
     const [phone, setPhone] = useState("");
     const nevigate = useNavigate();
 
-/*************  ✨ Codeium Command ⭐  *************/
-    /**
-     * Handles the submission of the registration form by preventing the default
-     * submission behavior, making a POST request to the backend to create a new
-     * user with the provided information, and then navigating to the login page
-     * if the request is successful. If the request fails, an error message is
-     * displayed to the user.
-     * @param {React.FormEvent<HTMLFormElement>} e The form submission event.
-     */
-/******  46c56763-fb0c-4e05-81ca-70b77c372d65  *******/
     function handleOnSubmit(e) {
         e.preventDefault();
         console.log({ firstName, lastName, email, password, address, phone });
