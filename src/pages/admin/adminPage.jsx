@@ -7,9 +7,41 @@ import AddItemPage from "./addItemPage";
 import UpdateItemPage from "./updateItemPage";
 import AdminUsersPage from "./adminUsersPage";
 import AdminOrdersPage from "./adminOrdersPage";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 
 export default function AdminPage() {
+  const [userValidated, setUserValidated] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      window.location.href = "/login";
+    }
+
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/users/`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).then((res) => {
+      console.log(res.data);
+
+      const user = res.data;
+
+      if (user.role == "Admin") {
+        setUserValidated(true);
+      }else{
+        window.location.href = "/";
+      }
+      
+    }).catch((err) => {
+      console.log(err);
+      setUserValidated(false);
+    })
+  },[])
+
   return (
     <div className="w-full h-screen flex">
 
@@ -38,13 +70,13 @@ export default function AdminPage() {
       </div>
 
       <div className="w-[calc(100vw-200px)]">
-        <Routes path="/*">
+        {userValidated && <Routes path="/*">
           <Route path="/orders" element={<AdminOrdersPage/>}/>
           <Route path="/users" element={<AdminUsersPage/>}/>
           <Route path="/items" element={<AdminItemPage/>}/>
           <Route path="/items/add" element={<AddItemPage/>}/>
           <Route path="/items/edit" element={<UpdateItemPage/>}/>
-        </Routes>
+        </Routes>}
       </div>
 
     </div>
