@@ -6,6 +6,7 @@ import AdminItemPage from "./adminItemPage";
 import AddItemPage from "./addItemPage";
 import UpdateItemPage from "./updateItemPage";
 import AdminUsersPage from "./adminUsersPage";
+import AdminOrdersPage from "./adminOrdersPage";
 
 
 export default function AdminPage() {
@@ -14,14 +15,14 @@ export default function AdminPage() {
 
       <div className="w-[200px] h-full bg-green-200">
 
-        <button className='w-full h-[40px] text-[25px] font-bold flex justify-center items-center'>
+        <Link to="/admin" className='w-full h-[40px] text-[25px] font-bold flex justify-center items-center'>
           <BsGraphDown />
           Dashboard
-        </button>
+        </Link>
 
-        <Link to="/admin/booking" className='w-full h-[40px] text-[25px] font-bold flex justify-center items-center'>
+        <Link to="/admin/Orders" className='w-full h-[40px] text-[25px] font-bold flex justify-center items-center'>
           <FaRegBookmark />
-          Bookings
+          Orders
         </Link>
 
         <Link to="/admin/items" className='w-full h-[40px] text-[25px] font-bold flex justify-center items-center'>
@@ -38,7 +39,7 @@ export default function AdminPage() {
 
       <div className="w-[calc(100vw-200px)]">
         <Routes path="/*">
-          <Route path="/booking" element={<h1> Booking</h1>}/>
+          <Route path="/orders" element={<AdminOrdersPage/>}/>
           <Route path="/users" element={<AdminUsersPage/>}/>
           <Route path="/items" element={<AdminItemPage/>}/>
           <Route path="/items/add" element={<AddItemPage/>}/>
