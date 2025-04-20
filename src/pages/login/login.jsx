@@ -8,6 +8,28 @@ export default function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
+    const googleLogin = useGoogleLogin(
+        {
+            onSuccess : (res)=>{
+                console.log(res)
+                axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/google`,{
+                  accessToken : res.access_token
+                }).then((res)=>{
+                  console.log(res)
+                  toast.success("Login Success")
+                  const user = res.data.user
+                  localStorage.setItem("token",res.data.token)
+                  if(user.role === "admin"){
+                    navigate("/admin/")
+                  }else{
+                    navigate("/")
+                  }
+                }).catch((err)=>{
+                  console.log(err)
+                })
+              }
+        }
+    );
 
     function handleOnSubmit(e) {
         e.preventDefault();
@@ -67,7 +89,11 @@ export default function LoginPage() {
                     />
 
                     <button className="w-[300px] h-[40px] bg-[#efac38] text-white text-2xl rounded-lg my-8" >Login</button>
-
+                    
+                    <div
+                     onClick={googleLogin}
+                     className="w-[300px] h-[40px] bg-[#efac38] text-white text-2xl rounded-lg my-8" >Login with Google</div>
+                    
                 </div>
             </form>
         </div>
