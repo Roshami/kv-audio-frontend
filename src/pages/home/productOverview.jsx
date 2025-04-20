@@ -32,12 +32,13 @@ export default function ProductOverview() {
         }
         {
             loadingStatus === "loaded" &&
-            <div className="w-full h-full flex justify-center items-center">
-                <div className="w-[49%] h-full">
+            <div className="w-full h-full flex flex-col md:flex-row justify-center items-center">
+                <h1 className="text-2xl my-6 md:hidden  font-bold text-accent text-center ">{product.name}</h1>
+                <div className="w-full md:w-[49%] h-full">
                     <ImageSlider images={product.image} />
                 </div>
-                <div className="w-[49%] h-full flex flex-col items-center">
-                    <h1 className="text-3xl font-bold text-gray-800">{product.name}</h1>
+                <div className="w-full md:w-[49%] p-2 h-full flex flex-col items-center">
+                    <h1 className="hidden md:block text-3xl font-bold text-gray-800">{product.name}</h1>
                     <h2 className="text-2xl font-bold text-gray-800">{product.categary}</h2>
                     <h3 className="text-2xl  text-gray-800 ">{product.dimentions}</h3>
                     <p className="text-gray-800">{product.description}</p>
