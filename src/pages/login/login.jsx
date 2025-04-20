@@ -3,6 +3,7 @@ import "./login.css";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useGoogleLogin } from "@react-oauth/google";
 
 export default function LoginPage() {
     const [email, setEmail] = useState("");
@@ -88,11 +89,11 @@ export default function LoginPage() {
 
                     />
 
-                    <button className="w-[300px] h-[40px] bg-[#efac38] text-white text-2xl rounded-lg my-8" >Login</button>
+                    <button className="w-[300px] h-[40px] bg-[#efac38] text-white text-2xl rounded-lg my-8 cursor-pointer" >Login</button>
                     
                     <div
                      onClick={googleLogin}
-                     className="w-[300px] h-[40px] bg-[#efac38] text-white text-2xl rounded-lg my-8" >Login with Google</div>
+                     className="w-[300px] h-[40px] bg-[#efac38] text-white text-2xl rounded-lg my-8 cursor-pointer" >Login with Google</div>
                     
                 </div>
             </form>
