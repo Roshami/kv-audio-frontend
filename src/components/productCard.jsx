@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function ProductCard({ item }) {
     return (
         <div className="w-[300px] h-[500px] bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-200 p-5 transition-transform transform hover:scale-105 hover:shadow-2xl m-4">
@@ -15,9 +17,9 @@ export default function ProductCard({ item }) {
                 <p className={`mt-3 text-sm font-medium ${item.avalibility ? 'text-green-600' : 'text-red-600'}`}>
                     {item.avalibility ? "✔ In Stock" : "✖ Out of Stock"}
                 </p>
-                <button className="mt-5 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-5 py-2.5 rounded-lg shadow-md hover:from-blue-600 hover:to-indigo-700 transition-transform transform hover:scale-105">
+                <Link to={`/product/${item.key}`} className="mt-5 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-5 py-2.5 rounded-lg shadow-md hover:from-blue-600 hover:to-indigo-700 transition-transform transform hover:scale-105">
                     View Details
-                </button>
+                </Link>
             </div>
         </div>
     );
