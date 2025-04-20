@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useLocation, useNavigate } from "react-router-dom";
+import mediaUpload from "../../utils/meadiaUpload";
 
 export default function UpdateItemPage() {
     const location = useLocation();
@@ -14,10 +15,26 @@ export default function UpdateItemPage() {
     const [productCategory, setProductCategory] = useState(location.state.categary);
     const [productDimensions, setProductDimensions] = useState(location.state.dimentions);
     const [productDescription, setProductDescription] = useState(location.state.description);
+    const [productImage, setProductImage] = useState([]);
     const nevigate = useNavigate();
 
 
-    async function handleAddItem(e) {
+    async function handleUpdateItem(e) {
+
+        let updatingImages = location.state.image
+        
+        if(productImage.length > 0) {
+
+            const promises = []
+            
+                    for (let i = 0; i < productImage.length; i++) {
+                        const promise = mediaUpload(productImage[i]);
+                        promises.push(promise)
+                    }
+
+                    updatingImages = await Promise.all(promises);
+            }
+
         //e.preventDefault();
         console.log(productKey, productName, productPrice, productCategory, productDimensions, productDescription);
 
@@ -31,19 +48,22 @@ export default function UpdateItemPage() {
                     price: productPrice,
                     categary: productCategory,
                     dimentions: productDimensions,
-                    description: productDescription
+                    description: productDescription,
+                    image: updatingImages
                 },
                     {
                         headers: {
                             Authorization: "Bearer " + token
                         }
                     })
-
+                
+                console.log(result);
                 toast.success(result.data.message);
 
                 nevigate("/admin/items")
 
             } catch (err) {
+                console.log(err);
                 toast.error(err.response.data.error);
             }
         } else {
@@ -98,7 +118,8 @@ export default function UpdateItemPage() {
                     onChange={(e) => setProductDescription(e.target.value)}
                     value={productDescription}
                 ></textarea>
-                <button className="bg-blue-500 text-white p-3 rounded-md hover:bg-blue-600 transition duration-300 shadow-md" onClick={handleAddItem}>Update Product</button>
+                <input type="file" multiple onChange={(e) => setProductImage(e.target.files)} className="w-full p-2 border rounded"></input>
+                <button className="bg-blue-500 text-white p-3 rounded-md hover:bg-blue-600 transition duration-300 shadow-md" onClick={handleUpdateItem}>Update Product</button>
 
                 <button className="bg-red-500 text-white p-3 rounded-md hover:bg-red-600 transition duration-300 shadow-md" onClick={() => nevigate("/admin/items")}>Cancel</button>
             </div>
