@@ -11,24 +11,24 @@ export default function LoginPage() {
     const navigate = useNavigate();
     const googleLogin = useGoogleLogin(
         {
-            onSuccess : (res)=>{
+            onSuccess: (res) => {
                 console.log(res)
-                axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/google`,{
-                  accessToken : res.access_token
-                }).then((res)=>{
-                  console.log(res)
-                  toast.success("Login Success")
-                  const user = res.data.user
-                  localStorage.setItem("token",res.data.token)
-                  if(user.role === "admin"){
-                    navigate("/admin/")
-                  }else{
-                    navigate("/")
-                  }
-                }).catch((err)=>{
-                  console.log(err)
+                axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/google`, {
+                    accessToken: res.access_token
+                }).then((res) => {
+                    console.log(res)
+                    toast.success("Login Success")
+                    const user = res.data.user
+                    localStorage.setItem("token", res.data.token)
+                    if (user.role === "admin") {
+                        navigate("/admin/")
+                    } else {
+                        navigate("/")
+                    }
+                }).catch((err) => {
+                    console.log(err)
                 })
-              }
+            }
         }
     );
 
@@ -49,9 +49,14 @@ export default function LoginPage() {
             //save the token to local storage
             localStorage.setItem("token", res.data.token);
 
-            if(user.role === "Admin"){
+            if (user.emailVerified == false) {
+                navigate("/verify-email")
+                return
+            }
+
+            if (user.role === "Admin") {
                 navigate("/admin/")
-            }else{
+            } else {
                 navigate("/")
             }
 
@@ -90,11 +95,11 @@ export default function LoginPage() {
                     />
 
                     <button className="w-[300px] h-[40px] bg-[#efac38] text-white text-2xl rounded-lg my-8 cursor-pointer" >Login</button>
-                    
+
                     <div
-                     onClick={googleLogin}
-                     className="w-[300px] h-[40px] bg-[#efac38] text-white text-2xl rounded-lg my-8 cursor-pointer" >Login with Google</div>
-                    
+                        onClick={googleLogin}
+                        className="w-[300px] h-[40px] bg-[#efac38] text-white text-2xl rounded-lg my-8 cursor-pointer" >Login with Google</div>
+
                 </div>
             </form>
         </div>
