@@ -3,5 +3,6 @@
 @theme {
     --color-primary: #FBFBFB;
     --color-secondary: #E8F9FF;
-    --color-accent: #367485;
+    --color-accent: #5133bb;
+    --color-text-color: #000000;
 }

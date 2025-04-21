@@ -9,48 +9,92 @@ export default function Header() {
     const token = localStorage.getItem("token");
 
     return (
-        <header className="w-full h-[100px]  shadow-xl flex justify-center items-center relative bg-accent text-white">
-            <img src="/logo.png" alt="logo" className="w-[100px] h-[100px] object-cover border-[1px] absolute left-1 rounded-full" />
-            <div className="hidden w-[450px]  md:flex justify-evenly items-center">
-                <Link to="/" className="text-[22px] m-1">Home</Link>
-                <Link to="/contact" className="text-[22px] m-1">Contact</Link>
-                <Link to="/gallery" className="text-[22px] m-1">Gallery</Link>
-                <Link to="/items" className="text-[22px] m-1">Items</Link>
-                <Link to="/booking" className="text-[22px] m-1 absolute right-70"><FaCartShopping /></Link>
+        <header className="w-full h-[80px] shadow-md bg-accent text-white fixed top-0 left-0 z-50">
+            <div className="container mx-auto h-full px-4 flex justify-between items-center relative">
+                {/* Logo */}
+                <div className="flex items-center space-x-4">
+                    <img 
+                        src="/logo.png" 
+                        alt="logo" 
+                        className="w-16 h-16 object-cover rounded-full border-2 border-white/30" 
+                    />
+                </div>
+
+                {/* Desktop Navigation */}
+                <nav className="hidden md:flex items-center space-x-8">
+                    <Link 
+                        to="/" 
+                        className="text-xl font-medium hover:text-gray-300 transition-colors duration-200"
+                    >
+                        Home
+                    </Link>
+                    <Link 
+                        to="/items" 
+                        className="text-xl font-medium hover:text-gray-300 transition-colors duration-200"
+                    >
+                        Items
+                    </Link>
+                    <Link 
+                        to="/gallery" 
+                        className="text-xl font-medium hover:text-gray-300 transition-colors duration-200"
+                    >
+                        Gallery
+                    </Link>
+                    <Link 
+                        to="/contact" 
+                        className="text-xl font-medium hover:text-gray-300 transition-colors duration-200"
+                    >
+                        Contact
+                    </Link>
+                </nav>
+
+                {/* Desktop Auth/Cart */}
+                <div className="hidden md:flex items-center space-x-6">
+                    <Link 
+                        to="/booking" 
+                        className="text-2xl hover:text-gray-300 transition-colors duration-200"
+                    >
+                        <FaCartShopping />
+                    </Link>
+                    
+                    {token ? (
+                        <button
+                            onClick={() => {
+                                localStorage.removeItem("token");
+                                window.location.href = "/login";
+                            }}
+                            className="text-xl font-medium hover:text-gray-300 transition-colors duration-200 cursor-pointer"
+                        >
+                            Logout
+                        </button>
+                    ) : (
+                        <>
+                            <Link 
+                                to="/login" 
+                                className="text-xl font-medium hover:text-gray-300 transition-colors duration-200 cursor-pointer"
+                            >
+                                Login
+                            </Link>
+                            <Link 
+                                to="/register" 
+                                className="text-xl font-medium bg-white text-accent px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors duration-200 cursor-pointer"
+                            >
+                                Sign Up
+                            </Link>
+                        </>
+                    )}
+                </div>
+
+                {/* Mobile Menu Button */}
+                <button 
+                    className="md:hidden text-2xl focus:outline-none"
+                    onClick={() => setNavPanelOpen(true)}
+                >
+                    <GiHamburgerMenu />
+                </button>
             </div>
-            
-            <GiHamburgerMenu
-                className="absolute right-5 text-[24px] md:hidden cursor-pointer"
-                onClick={() => {
-                    setNavPanelOpen(true);
-                }}
-            />
 
-            {token != null && 
-            <button
-                onClick={
-                    () => {
-                        localStorage.removeItem("token")
-                        window.location.href = "/login"
-                    }
-                }
-                className="hidden md:block absolute right-8 text-[24px] cursor-pointer">
-                Logout
-            </button>
-            }
-
-            {token == null && 
-            <Link to="/login" className="hidden md:block absolute right-35 text-[24px] cursor-pointer">
-                Login
-            </Link>
-            }
-
-            {token == null && 
-            <Link to="/register" className="hidden md:block absolute right-8 text-[24px] cursor-pointer">
-                Sign Up
-            </Link>
-            }
-
+            {/* Mobile Navigation Panel */}
             <MobileNavPanel isOpen={navPanelOpen} setOpen={setNavPanelOpen} />
         </header>
     )

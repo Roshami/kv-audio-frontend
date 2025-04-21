@@ -54,7 +54,7 @@ export default function AdminUsersPage() {
             {loading ? (
                 <p>Loading...</p>
             ) : (
-                <div className="overflow-x-auto">
+                <div className="overflow-x-auto ">
                     <table className="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
                         <thead>
                             <tr className="bg-gray-100 text-gray-700 text-sm uppercase text-left">

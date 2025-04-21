@@ -5,87 +5,131 @@ import { Link, useNavigate } from "react-router-dom";
 
 export default function AdminItemPage() {
     const [items, setItems] = useState([]);
-    const [itemLoaded, setItemLoaded] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
-
-        if (!itemLoaded) {
-            const token = localStorage.getItem("token");
-            axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/products`, {
-                headers: { "Authorization": `Bearer ${token}` }
-            }).then(
-                (res) => {
-                    console.log(res);
-                    setItems(res.data);
-                    setItemLoaded(true);
-                }).catch((err) => {
-                    console.log(err);
+        const fetchItems = async () => {
+            try {
+                const token = localStorage.getItem("token");
+                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/products`, {
+                    headers: { "Authorization": `Bearer ${token}` }
                 });
-        }
+                setItems(response.data);
+            } catch (err) {
+                console.error(err);
+                setError("Failed to load items");
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    }, [itemLoaded]);
+        fetchItems();
+    }, []);
 
-    const handleDelete = (key) => {
-        if (window.confirm("Are you sure you want to delete thiS item?")) {
-            setItems(items.filter((item) => item.key !== key));
+    const handleDelete = async (key) => {
+        if (!window.confirm("Are you sure you want to delete this item?")) return;
+
+        try {
             const token = localStorage.getItem("token");
-            axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/products/${key}`, {
+            await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/products/${key}`, {
                 headers: { "Authorization": `Bearer ${token}` }
-            }).then((res) => {
-                console.log(res);
-                setItemLoaded(false);
-            }).catch((err) => {
-                console.log(err);
-            })
+            });
+            setItems(items.filter((item) => item.key !== key));
+            toast.success("Item deleted successfully");
+        } catch (err) {
+            console.error(err);
+            toast.error("Failed to delete item");
         }
     };
 
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center min-h-[50vh]">
+                <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="flex items-center justify-center min-h-[50vh]">
+                <div className="text-red-500 text-lg">{error}</div>
+            </div>
+        );
+    }
 
     return (
-        <div className="w-full h-full p-6 flex flex-col justify-center items-center">
-            {!itemLoaded && <div className="border-4 my-4 border-b-green-700 w-[100px] h-[100px] rounded-full animate-spin border-gray-300"></div>}
-            {itemLoaded && <div className="overflow-x-auto">
-                <table className="w-full border border-gray-300 rounded-lg shadow-md">
-                    <thead>
-                        <tr className="bg-gray-100 text-gray-700 uppercase text-sm">
-                            <th className="py-2 px-4">Key</th>
-                            <th className="py-2 px-4">Name</th>
-                            <th className="py-2 px-4">Price</th>
-                            <th className="py-2 px-4">Category</th>
-                            <th className="py-2 px-4">Dimensions</th>
-                            <th className="py-2 px-4">Availability</th>
-                            <th className="py-2 px-4">Actions</th>
+        <div className="p-4 md:p-6">
+            <div className="flex justify-between items-center mb-6">
+                <h1 className="text-2xl font-bold text-purple-800">Manage Products</h1>
+                <Link 
+                    to="/admin/items/add" 
+                    className="flex items-center gap-2 bg-accent hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
+                >
+                    <CiCirclePlus className="text-xl" />
+                    <span className="hidden sm:inline">Add Product</span>
+                </Link>
+            </div>
+
+            <div className="overflow-x-auto bg-white rounded-lg shadow-md">
+                <table className="min-w-full divide-y divide-gray-200">
+                    <thead className="bg-gray-50">
+                        <tr>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Key</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">Category</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden lg:table-cell">Dimensions</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {items.map((product) => (
-                            <tr key={product.key} className="border-b hover:bg-gray-50">
-                                <td className="py-3 px-4 text-center">{product.key}</td>
-                                <td className="py-3 px-4">{product.name}</td>
-                                <td className="py-3 px-4 text-center">${product.price}</td>
-                                <td className="py-3 px-4">{product.categary}</td>
-                                <td className="py-3 px-4">{product.dimentions}</td>
-                                <td className="py-3 px-4 text-center">
-                                    <span className={`px-3 py-1 rounded-md text-white ${product.avalibility ? 'bg-green-500' : 'bg-red-500'}`}>
-                                        {product.avalibility ? "Available" : "Not Available"}
-                                    </span>
-                                </td>
-                                <td className="py-3 px-4 flex gap-3 justify-center">
-                                    <button onClick={() => navigate(`/admin/items/edit`, {
-                                        state: product
-                                    })} className="px-4 py-1 bg-blue-500 text-white rounded-md hover:bg-blue-700">Edit</button>
-                                    <button onClick={() => handleDelete(product.key)} className="px-4 py-1 bg-red-500 text-white rounded-md hover:bg-red-700">Delete</button>
+                    <tbody className="bg-white divide-y divide-gray-200">
+                        {items.length > 0 ? (
+                            items.map((product) => (
+                                <tr key={product.key} className="hover:bg-gray-50">
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{product.key}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.name}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${product.price}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 hidden md:table-cell">{product.categary}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 hidden lg:table-cell">{product.dimentions}</td>
+                                    <td className="px-6 py-4 whitespace-nowrap">
+                                        <span className={`px-2 py-1 text-xs font-semibold rounded-full ${
+                                            product.avalibility ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                                        }`}>
+                                            {product.avalibility ? "Available" : "Not Available"}
+                                        </span>
+                                    </td>
+                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                        <div className="flex space-x-2">
+                                            <button
+                                                onClick={() => navigate(`/admin/items/edit`, { state: product })}
+                                                className="text-blue-600 hover:text-blue-900 cursor-pointer"
+                                            >
+                                                Edit
+                                            </button>
+                                            <button
+                                                onClick={() => handleDelete(product.key)}
+                                                className="text-red-600 hover:text-red-900 cursor-pointer"
+                                            >
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="7" className="px-6 py-4 text-center text-gray-500">
+                                    No products found
                                 </td>
                             </tr>
-                        ))}
+                        )}
                     </tbody>
                 </table>
-            </div>}
-
-            <Link to="/admin/items/add" className="fixed bottom-6 right-6 hover:text-red-900">
-                <CiCirclePlus className="text-[70px]" />
-            </Link>
+            </div>
         </div>
     );
 }

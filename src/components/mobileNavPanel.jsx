@@ -1,109 +1,85 @@
-import { IoMdClose } from "react-icons/io"
-import { useEffect, useState } from "react"
-import { MdContacts, MdPhotoLibrary } from "react-icons/md"
-import { FaRegCalendarCheck } from "react-icons/fa6"
-import { CiHome, CiSpeaker } from "react-icons/ci"
-import { useNavigate } from "react-router-dom"
+import { IoMdClose } from "react-icons/io";
+import { useEffect, useState } from "react";
+import { MdContacts, MdPhotoLibrary } from "react-icons/md";
+import { FaRegCalendarCheck } from "react-icons/fa6";
+import { CiHome, CiSpeaker } from "react-icons/ci";
+import { useNavigate } from "react-router-dom";
 
 export default function MobileNavPanel({ isOpen, setOpen }) {
-    const [animate, setAnimate] = useState(false)
+    const [animate, setAnimate] = useState(false);
     const navigate = useNavigate();
 
     function goTo(route) {
-		navigate(route);
-		setOpen(false);
-	}
+        navigate(route);
+        setOpen(false);
+    }
 
     useEffect(() => {
         if (isOpen) {
-            // Start animation slightly after mount
-            setTimeout(() => setAnimate(true), 10)
+            setTimeout(() => setAnimate(true), 10);
         } else {
-            setAnimate(false)
+            setAnimate(false);
         }
-    }, [isOpen])
+    }, [isOpen]);
 
     const handleClose = () => {
-        setAnimate(false)
-        setTimeout(() => setOpen(false), 300) // match transition duration
-    }
+        setAnimate(false);
+        setTimeout(() => setOpen(false), 300);
+    };
 
     return (
         <>
             {isOpen && (
-                <div className="w-full h-full bg-[#00000070] fixed top-0 left-0 flex justify-start items-start z-50">
+                <div className="fixed inset-0 z-50">
+                    {/* Overlay */}
+                    <div 
+                        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+                        onClick={handleClose}
+                    />
+                    
+                    {/* Panel */}
                     <div
-                        className={`w-[calc(100vw-90px)] h-full bg-white relative transition-transform duration-300 ease-in-out 
-                        ${animate ? "translate-x-0" : "-translate-x-full"}`}
+                        className={`relative h-full w-4/5 max-w-sm bg-white shadow-xl transition-transform duration-300 ease-in-out ${
+                            animate ? "translate-x-0" : "-translate-x-full"
+                        }`}
                     >
-                        <div className="bg-accent w-full h-[100px] flex justify-center items-center">
+                        {/* Panel Header */}
+                        <div className="flex items-center justify-between bg-accent p-4 h-24">
                             <img
                                 src="/logo.png"
                                 alt="logo"
-                                className="w-[100px] h-[100px] object-cover border-[1px] absolute left-1 rounded-full"
+                                className="h-16 w-16 rounded-full border-2 border-white/30 object-cover"
                             />
-                            <IoMdClose
-                                className="text-3xl font-bold m-1 absolute right-3 cursor-pointer"
+                            <button 
                                 onClick={handleClose}
-                            />
+                                className="text-white hover:text-gray-200 transition-colors"
+                            >
+                                <IoMdClose className="h-8 w-8" />
+                            </button>
                         </div>
+
                         {/* Navigation Links */}
-						<div
-							onClick={() => {
-								goTo("/");
-							}}
-							className="text-[20px] text-accent m-1 p-2 flex items-center gap-2 cursor-pointer hover:bg-accent/10 rounded-md"
-						>
-							<CiHome className="text-2xl" />
-							Home
-						</div>
-                        <div
-							onClick={() => {
-								goTo("/items");
-							}}
-							className="text-[20px] text-accent m-1 p-2 flex items-center gap-2 cursor-pointer hover:bg-accent/10 rounded-md"
-						>
-							<CiSpeaker className="text-2xl" />
-							Items
-						</div>
-
-						<div
-							onClick={() => {
-								goTo("/gallery");
-							}}
-							className="text-[20px] text-accent m-1 p-2 flex items-center gap-2 cursor-pointer hover:bg-accent/10 rounded-md"
-						>
-							<MdPhotoLibrary className="text-2xl" />
-							Gallery
-						</div>                        
-
-						<div
-							onClick={() => {
-								goTo("/booking");
-							}}
-							className="text-[20px] text-accent m-1 p-2 flex items-center gap-2 cursor-pointer hover:bg-accent/10 rounded-md"
-						>
-							<FaRegCalendarCheck className="text-2xl" />
-							Booking
-						</div>
-
-						<div
-							onClick={() => {
-								goTo("/contact");
-							}}
-							className="text-[20px] text-accent m-1 p-2 flex items-center gap-2 cursor-pointer hover:bg-accent/10 rounded-md"
-						>
-							<MdContacts className="text-2xl" />
-							Contact
-						</div>
-
-						
-                           
-					
+                        <nav className="space-y-1 p-4">
+                            {[
+                                { path: "/", icon: <CiHome className="h-6 w-6" />, label: "Home" },
+                                { path: "/items", icon: <CiSpeaker className="h-6 w-6" />, label: "Items" },
+                                { path: "/gallery", icon: <MdPhotoLibrary className="h-6 w-6" />, label: "Gallery" },
+                                { path: "/booking", icon: <FaRegCalendarCheck className="h-6 w-6" />, label: "Booking" },
+                                { path: "/contact", icon: <MdContacts className="h-6 w-6" />, label: "Contact" },
+                            ].map((item) => (
+                                <button
+                                    key={item.path}
+                                    onClick={() => goTo(item.path)}
+                                    className="flex w-full items-center gap-3 rounded-lg p-3 text-lg font-semibold text-accent hover:bg-accent/10 focus:outline-none focus:ring-2 focus:ring-accent/50"
+                                >
+                                    {item.icon}
+                                    {item.label}
+                                </button>
+                            ))}
+                        </nav>
                     </div>
-                    
                 </div>
             )}
         </>
-    )
+    );
 }
