@@ -1,0 +1,7 @@
+.hero-bg-picture{
+    background-image: url('/hero-bg.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
