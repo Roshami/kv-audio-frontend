@@ -3,9 +3,14 @@ import './home.css'
 import CardSlider from '../../components/CardSlider'
 import SearchBar from '../../components/searchBar';
 import { useState } from 'react';
+import ReviewsCard from '../../components/reviewsCard';
+import AddReview from '../../components/addreview';
+import { IoMdCloseCircleOutline } from 'react-icons/io';
+
 
 
 export default function Home() {
+    const [modleOpen, setModleOpen] = useState(false);
     const [formData, setFormData] = useState({
         category: "All"
     });
@@ -113,6 +118,37 @@ export default function Home() {
                     <div className="w-full md:W-[49%]"><CardSlider /></div>
                 </div>
             </div>
+
+            {/* Reviews Section */}
+            <div className="max-w-7xl mx-auto">
+                <h2 className="text-3xl font-bold text-purple-900 text-center m-5">Customer Reviews</h2>
+                <div className="flex">
+
+                    <div className="flex justify-center items-end w-[49%] relative">
+                        <div className="flex justify-center items-center">
+                            <img src="./public/system.png" alt="" />
+                        </div>
+                        <button
+                        onClick={() => setModleOpen(true)}
+                        className="h-[45px] bg-accent/50 text-white px-5 py-2 rounded-lg hover:bg-blue-900 transition-transform transform hover:scale-105 mt-5 text-center text-xl cursor-pointer absolute mb-5">Add your comment</button>
+                    </div>
+                    <div className="flex flex-col justify-center items-center w-[49%] px-11 bg-amber-300">
+
+                        <ReviewsCard />
+                    </div>
+                </div>
+            </div>
+
+
+            {/* add review Section */}
+            {modleOpen && <div className="w-full h-full bg-[#000000a9] mx-auto flex fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 justify-center items-center">
+                <div className="w-[50%] flex  items-center bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 relative">
+                    <IoMdCloseCircleOutline className="absolute top-2 right-2 text-3xl cursor-pointer hover:text-red-700 z-52" onClick={() => setModleOpen(false)} />
+                    <AddReview/>
+                </div>              
+            </div>}
+
+
         </div>
     )
 }
