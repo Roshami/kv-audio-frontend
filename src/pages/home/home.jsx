@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom'
 import './home.css'
-import CardSlider from '../../components/CardSlider'
 import SearchBar from '../../components/searchBar';
 import { useState } from 'react';
 import ReviewsCard from '../../components/reviewsCard';
 import AddReview from '../../components/addreview';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
+import CardSlider from '../../components/CardSlider';
 
 
 
