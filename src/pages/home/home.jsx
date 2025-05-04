@@ -125,7 +125,7 @@ export default function Home() {
 
                     <div className="flex justify-center items-end w-[49%] relative">
                         <div className="flex justify-center items-center">
-                            <img src="./public/system.png" alt="" />
+                            <img src="./public/system.png" alt="system" />
                         </div>
                         <button
                         onClick={() => setModleOpen(true)}
