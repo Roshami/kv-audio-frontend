@@ -5,8 +5,7 @@ import { useState } from 'react';
 import ReviewsCard from '../../components/reviewsCard';
 import AddReview from '../../components/addreview';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
-
-
+import CardSlider from '../../components/cardSlider';
 
 
 export default function Home() {
@@ -115,7 +114,7 @@ export default function Home() {
                     </div>
 
                     {/* Card Slider */}
-                    <div className="w-full md:W-[49%]"></div>
+                    <div className="w-full md:W-[49%]"><CardSlider /></div>
                 </div>
             </div>
 
