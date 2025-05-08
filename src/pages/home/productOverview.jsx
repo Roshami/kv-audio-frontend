@@ -15,6 +15,7 @@ export default function ProductOverview() {
         const fetchProduct = async () => {
             try {
                 const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/products/${key}`);
+                console.log(response.data);
                 setProduct(response.data);
                 setLoadingStatus("loaded");
             } catch (err) {
@@ -24,7 +25,7 @@ export default function ProductOverview() {
             }
         };
 
-        fetchProduct();
+        fetchProduct(); 
     }, [key]);
 
     const handleAddToCart = () => {
@@ -49,7 +50,7 @@ export default function ProductOverview() {
                     <p className="text-gray-600 mb-4">We couldn't load the requested product. Please try again later.</p>
                     <button
                         onClick={() => window.location.reload()}
-                        className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+                        className="px-4 py-2 bg-blue-600 text-white rounded-md cursor-pointer hover:bg-blue-700 transition-colors"
                     >
                         Retry
                     </button>

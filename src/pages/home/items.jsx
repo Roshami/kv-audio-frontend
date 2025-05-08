@@ -3,13 +3,17 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import ProductCard from "../../components/productCard";
 import SearchBar from "../../components/searchBar";
+import { useLocation, useSearchParams } from "react-router-dom";
 
 export default function Items() {
     const [state, setState] = useState("loading"); // loading, success, error
     const [items, setItems] = useState([]);
-    const [category, setCategory] = useState("all");
-    const [searchTerm, setSearchTerm] = useState("");
+    const [searchParams] = useSearchParams()
+    const [category, setCategory] = useState(searchParams.get("category")||"all");
+    const location = useLocation();
+    const [searchTerm, setSearchTerm] = useState(location.query ||"");
     const [filteredItems, setFilteredItems] = useState([]);
+
 
     useEffect(() => {
         if (state === "loading") {
@@ -25,45 +29,35 @@ export default function Items() {
         }
     }, [state]);
 
+    useEffect(() => {
+        handleFilter();
+    }, [searchTerm, category, items]);
+
     async function handleFilter() {
-        console.log(searchTerm, category);
         try {
-            if (category === "all" && !searchTerm) {
-                setState("loading");
-            }else if (searchTerm && category === "all") {
-                axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/filterProducts/${searchTerm}`)
-                .then((res) => {
-                    setItems(res.data);
-                    setState("success");
-                    const filtered = items.filter(
-                        (item) => item.name.toLowerCase().includes(searchTerm.toLowerCase())
-                    );
-                    setFilteredItems(filtered);
-                }).catch((err) => {
-                    toast.error(err?.response?.data?.error || "An error occurred");
-                    setState("error");
-                });
-                
-            } 
-            else {
-                const filtered = items.filter(
-                    (item) => item.name.toLowerCase().includes(searchTerm.toLowerCase()) && item.category === category
+            let filtered = [...items];
+
+            // If search term is provided
+            if (searchTerm) {
+                filtered = filtered.filter(
+                    (item) => item.name.toLowerCase().includes(searchTerm.toLowerCase())
                 );
-                setFilteredItems(filtered);
             }
+
+            // If a category is selected
+            if (category !== "all") {
+                filtered = filtered.filter((item) => item.categary === category);
+            }
+
+            setFilteredItems(filtered);
+
         } catch (err) {
             console.error(err);
-            toast.error(err?.response?.data?.error || "An error occurred products");
+            toast.error(err?.response?.data?.error || "An error occurred while filtering products");
         }
     }
 
-    useEffect(() => {
-
-        handleFilter();
-    }, [searchTerm, category])
-
     const handleSearch = (query) => {
-        console.log("Search term:", query);
         setSearchTerm(query);
     };
 
@@ -116,7 +110,7 @@ export default function Items() {
                         <p className="text-lg text-gray-600 mb-4">Failed to load products</p>
                         <button
                             onClick={() => setState("loading")}
-                            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+                            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors cursor-pointer"
                         >
                             Retry
                         </button>
@@ -125,15 +119,17 @@ export default function Items() {
 
                 {/* Success State */}
                 {state === "success" && (
-                    category === "all" || filteredItems.length > 0 ? (
+                    filteredItems.length > 0 ? (
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                            {items.map((item) => (
+                            {filteredItems.map((item) => (
                                 <ProductCard key={item.key} item={item} />
                             ))}
                         </div>
                     ) : (
-                        <div className="text-center py-20">
-                            <p className="text-lg text-gray-600">No products found</p>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                            {items.map((item) => (
+                                <ProductCard key={item.key} item={item} />
+                            ))}
                         </div>
                     )
                 )}

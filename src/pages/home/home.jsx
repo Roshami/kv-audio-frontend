@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import './home.css'
 import SearchBar from '../../components/searchBar';
 import { useState } from 'react';
@@ -13,6 +13,7 @@ export default function Home() {
     const [formData, setFormData] = useState({
         category: "All"
     });
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -24,7 +25,7 @@ export default function Home() {
 
     const handleSearch = (query) => {
         console.log("Search term:", query);
-        // You can add filter logic or API call here
+        navigate(`/items?search=${query}`);
     };
 
     return (
@@ -57,32 +58,32 @@ export default function Home() {
                             <SearchBar onSearch={handleSearch} />
                         </div>
                         <div className="hidden md:block p-4">
-                            <div className='flex flex-col justify-center items-center px-3' onChange={(e) => setCategory(e.target.value)}>
+                            <div className='flex flex-col justify-center items-center px-3' >
                                 <h2 className="text-3xl font-bold text-purple-900  text-center mt-5 cursor-pointer">All Categories</h2>
-                                <button className="w-full h-[45px] bg-accent text-white px-5 py-2 rounded-lg hover:bg-blue-900 transition-transform transform hover:scale-105 mt-5 text-center text-xl cursor-pointer">
+                                <Link to="/items?category=Microphones" className="w-full h-[45px] bg-accent text-white px-5 py-2 rounded-lg hover:bg-blue-900 transition-transform transform hover:scale-105 mt-5 text-center text-xl cursor-pointer">
                                     Microphones
-                                </button>
-                                <button className="w-full h-[45px] bg-accent text-white px-5 py-2 rounded-lg hover:bg-blue-900 transition-transform transform hover:scale-105 mt-1 text-center text-xl cursor-pointer">
+                                </Link>
+                                <Link to="/items?category=Mixers" className="w-full h-[45px] bg-accent text-white px-5 py-2 rounded-lg hover:bg-blue-900 transition-transform transform hover:scale-105 mt-1 text-center text-xl cursor-pointer">
                                     Mixers
-                                </button>
-                                <button className='w-full h-[45px] bg-accent text-white px-5 py-2 rounded-lg hover:bg-blue-900 transition-transform transform hover:scale-105 mt-1 text-center text-xl cursor-pointer'>
+                                </Link>
+                                <Link to="/items?category=Speakers" className='w-full h-[45px] bg-accent text-white px-5 py-2 rounded-lg hover:bg-blue-900 transition-transform transform hover:scale-105 mt-1 text-center text-xl cursor-pointer'>
                                     Speakers
-                                </button>
-                                <button className='w-full h-[45px] bg-accent text-white px-5 py-2 rounded-lg hover:bg-blue-900 transition-transform transform hover:scale-105 mt-1 text-center text-xl cursor-pointer'>
+                                </Link>
+                                <Link to="/items?category=Amplifiers" className='w-full h-[45px] bg-accent text-white px-5 py-2 rounded-lg hover:bg-blue-900 transition-transform transform hover:scale-105 mt-1 text-center text-xl cursor-pointer'>
                                     Amplifiers
-                                </button>
-                                <button className='w-full h-[45px] bg-accent text-white px-5 py-2 rounded-lg hover:bg-blue-900 transition-transform transform hover:scale-105 mt-1 text-center text-xl cursor-pointer'>
+                                </Link>
+                                <Link to="/items?category=Wireless Mics" className='w-full h-[45px] bg-accent text-white px-5 py-2 rounded-lg hover:bg-blue-900 transition-transform transform hover:scale-105 mt-1 text-center text-xl cursor-pointer'>
                                     Wireless Mics
-                                </button>
-                                <button className='w-full h-[45px] bg-accent text-white px-5 py-2 rounded-lg hover:bg-blue-900 transition-transform transform hover:scale-105 mt-1 text-center text-xl cursor-pointer'>
+                                </Link>
+                                <Link to="/items?category=DJ Gear" className='w-full h-[45px] bg-accent text-white px-5 py-2 rounded-lg hover:bg-blue-900 transition-transform transform hover:scale-105 mt-1 text-center text-xl cursor-pointer'>
                                     DJ Gear
-                                </button>
-                                <button className='w-full h-[45px] bg-accent text-white px-5 py-2 rounded-lg hover:bg-blue-900 transition-transform transform hover:scale-105 mt-1 text-center text-xl cursor-pointer'>
+                                </Link>
+                                <Link to="/items?category=Lighting" className='w-full h-[45px] bg-accent text-white px-5 py-2 rounded-lg hover:bg-blue-900 transition-transform transform hover:scale-105 mt-1 text-center text-xl cursor-pointer'>
                                     Lighting
-                                </button>
-                                <button className='w-full h-[45px] bg-accent text-white px-5 py-2 rounded-lg hover:bg-blue-900 transition-transform transform hover:scale-105 mt-1 text-center text-xl cursor-pointer'>
+                                </Link>
+                                <Link to="/items?category=Accessories" className='w-full h-[45px] bg-accent text-white px-5 py-2 rounded-lg hover:bg-blue-900 transition-transform transform hover:scale-105 mt-1 text-center text-xl cursor-pointer'>
                                     Accessories
-                                </button>
+                                </Link>
                             </div>
                         </div>
 
