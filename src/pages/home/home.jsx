@@ -57,7 +57,7 @@ export default function Home() {
                         <div className="p-4">
                             <SearchBar onSearch={handleSearch} />
                         </div>
-                        <div className="hidden md:block p-4">
+                        <div className="p-4">
                             <div className='flex flex-col justify-center items-center px-3' >
                                 <h2 className="text-3xl font-bold text-purple-900  text-center mt-5 cursor-pointer">All Categories</h2>
                                 <Link to="/items?category=Microphones" className="w-full h-[45px] bg-accent text-white px-5 py-2 rounded-lg hover:bg-blue-900 transition-transform transform hover:scale-105 mt-5 text-center text-xl cursor-pointer">
@@ -87,35 +87,11 @@ export default function Home() {
                             </div>
                         </div>
 
-                        {/* Search and Filter Section for mobile */}
-                        <div className="block md:hidden p-4">
-                            <div className='flex justify-center items-center px-3' onChange={(e) => setCategory(e.target.value)}>
-                                <label htmlFor="category" className="block text-xl font-medium text-purple-700 mb-1 mr-3">
-                                    Category
-                                </label>
-                                <select
-                                    id="category"
-                                    name="category"
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-                                    onChange={handleChange}
-                                    value={formData.category}
-                                >
-                                    <option value="Microphones">All</option>
-                                    <option value="Microphones">Microphones</option>
-                                    <option value="Mixers">Mixers</option>
-                                    <option value="Speakers">Speakers</option>
-                                    <option value="Amplifiers">Amplifiers</option>
-                                    <option value="Wireless Mics">Wireless Mics</option>
-                                    <option value="DJ Gear">DJ Gear</option>
-                                    <option value="Lighting">Lighting</option>
-                                    <option value="Accessories">Accessories</option>
-                                </select>
-                            </div>
-                        </div>
+                        
                     </div>
 
                     {/* Card Slider */}
-                    <div className="w-full md:W-[49%]"><CardSlider /></div>
+                    <div className="w-full md:W-[49%] "><CardSlider /></div>
                 </div>
             </div>
 
@@ -142,7 +118,7 @@ export default function Home() {
 
             {/* add review Section */}
             {modleOpen && <div className="w-full h-full bg-[#000000a9] mx-auto flex fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 justify-center items-center">
-                <div className="w-[50%] flex  items-center bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 relative">
+                <div className=" flex  items-center relative">
                     <IoMdCloseCircleOutline className="absolute top-2 right-2 text-3xl cursor-pointer hover:text-red-700 z-52" onClick={() => setModleOpen(false)} />
                     <AddReview/>
                 </div>              
