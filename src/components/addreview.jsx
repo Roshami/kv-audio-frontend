@@ -3,6 +3,7 @@ import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export default function AddReview() {
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -14,6 +15,7 @@ export default function AddReview() {
         comment: "",
     });
     const [hoverRating, setHoverRating] = useState(0);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -70,6 +72,7 @@ export default function AddReview() {
             
             toast.success("Review added successfully!");
             setFormData(prev => ({ ...prev, rating: 0, comment: "" }));
+            navigate("/");
         } catch (error) {
             console.error(error);
             toast.error(error.response?.data?.message || "Failed to add review");
