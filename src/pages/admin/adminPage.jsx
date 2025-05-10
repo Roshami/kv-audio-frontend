@@ -10,6 +10,8 @@ import AdminOrdersPage from "./adminOrdersPage";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { FiMenu } from "react-icons/fi";
+import { GoCommentDiscussion } from "react-icons/go";
+import AdminReviewPage from "./adminReviewPage";
 
 export default function AdminPage() {
   const [userValidated, setUserValidated] = useState(false);
@@ -107,6 +109,11 @@ export default function AdminPage() {
               Items
             </Link>
 
+            <Link to="/admin/reviews" className="flex items-center p-3 rounded-lg hover:bg-blue-700 transition-colors">
+              <GoCommentDiscussion className="mr-3 text-lg" />
+              Reviews
+            </Link>
+
             <Link
               to="/admin/users"
               className="flex items-center p-3 rounded-lg hover:bg-blue-700 transition-colors"
@@ -147,6 +154,7 @@ export default function AdminPage() {
             <Route path="/users" element={<AdminUsersPage />} />
             <Route path="/items" element={<AdminItemPage />} />
             <Route path="/items/add" element={<AddItemPage />} />
+            <Route path="/reviews" element={<AdminReviewPage />} />
             <Route path="/items/edit" element={<UpdateItemPage />} />
           </Routes>
         )}
