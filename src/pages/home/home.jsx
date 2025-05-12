@@ -1,30 +1,38 @@
 import { Link, useNavigate } from 'react-router-dom'
 import './home.css'
 import SearchBar from '../../components/searchBar';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReviewsCard from '../../components/reviewsCard';
 import AddReview from '../../components/addreview';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import CardSlider from '../../components/cardSlider';
+import axios from 'axios';
 
 
 export default function Home() {
     const [modleOpen, setModleOpen] = useState(false);
-    const [formData, setFormData] = useState({
-        category: "All"
-    });
     const navigate = useNavigate();
+    const [reviews, setReviews] = useState([]);
+    const [state, setState] = useState("loading");
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: value
-        }));
-    };
+    useEffect(() => {
+        if (state === "loading") {
+            axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/reviews`)
+                .then((res) => {
+                    //console.log(res.data);
+                    setReviews(res.data);
+                    setState("success");
+                })
+                .catch((err) => {
+                    toast.error(err?.response?.data?.error || "An error occurred");
+                    setState("error");
+                });
+        }
+    })
+
 
     const handleSearch = (query) => {
-        console.log("Search term:", query);
+       // console.log("Search term:", query);
         navigate(`/items?search=${query}`);
     };
 
@@ -109,8 +117,9 @@ export default function Home() {
                         className="h-[45px] bg-accent/50 text-white px-5 py-2 rounded-lg hover:bg-blue-900 transition-transform transform hover:scale-105 mt-5 text-center text-xl cursor-pointer absolute mb-5">Add your comment</button>
                     </div>
                     <div className="flex flex-col justify-center items-center w-[49%] px-11 bg-amber-300">
-
-                        <ReviewsCard />
+                        {reviews.map((review) => {
+                            return <ReviewsCard key={review._id} review={review} />
+                        })}
                     </div>
                 </div>
             </div>
