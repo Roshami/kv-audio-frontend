@@ -79,7 +79,7 @@ export default function AddReview() {
     }
 
     return (
-        <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden p-6 sm:p-8">
+        <div className="max-w-md md:w-[500px] mx-auto bg-white rounded-xl shadow-md overflow-hidden p-6 sm:p-8">
             <h2 className="text-2xl font-bold text-gray-800 text-center mb-6">Leave a Review</h2>
             
             <form onSubmit={handleSubmit} className="space-y-6">
