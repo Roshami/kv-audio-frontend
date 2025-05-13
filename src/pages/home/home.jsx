@@ -7,7 +7,7 @@ import AddReview from '../../components/addreview';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import CardSlider from '../../components/cardSlider';
 import axios from 'axios';
-
+import toast from 'react-hot-toast';
 
 export default function Home() {
     const [modleOpen, setModleOpen] = useState(false);
@@ -32,7 +32,7 @@ export default function Home() {
 
 
     const handleSearch = (query) => {
-       // console.log("Search term:", query);
+        // console.log("Search term:", query);
         navigate(`/items?search=${query}`);
     };
 
@@ -95,7 +95,7 @@ export default function Home() {
                             </div>
                         </div>
 
-                        
+
                     </div>
 
                     {/* Card Slider */}
@@ -113,8 +113,8 @@ export default function Home() {
                             <img src="/system.png" alt="system" />
                         </div>
                         <button
-                        onClick={() => setModleOpen(true)}
-                        className="h-[45px] bg-accent/50 text-white px-5 py-2 rounded-lg hover:bg-blue-900 transition-transform transform hover:scale-105 mt-5 text-center text-xl cursor-pointer absolute mb-5">Add your comment</button>
+                            onClick={() => setModleOpen(true)}
+                            className="h-[45px] bg-accent/50 text-white px-5 py-2 rounded-lg hover:bg-blue-900 transition-transform transform hover:scale-105 mt-5 text-center text-xl cursor-pointer absolute mb-5">Add your comment</button>
                     </div>
                     <div className="flex flex-col justify-center items-center w-[49%] px-11 bg-amber-300">
                         {reviews.map((review) => {
@@ -129,11 +129,10 @@ export default function Home() {
             {modleOpen && <div className="w-full h-full bg-[#000000a9] mx-auto flex fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 justify-center items-center">
                 <div className=" flex  items-center relative">
                     <IoMdCloseCircleOutline className="absolute top-2 right-2 text-3xl cursor-pointer hover:text-red-700 z-52" onClick={() => setModleOpen(false)} />
-                    <AddReview/>
-                </div>              
+                    <AddReview />
+                </div>
             </div>}
-
-
+            
         </div>
     )
 }
