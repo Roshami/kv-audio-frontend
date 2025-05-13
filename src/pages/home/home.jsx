@@ -1,138 +1,208 @@
-import { Link, useNavigate } from 'react-router-dom'
-import './home.css'
-import SearchBar from '../../components/searchBar';
+import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import ReviewsCard from '../../components/reviewsCard';
-import AddReview from '../../components/addreview';
-import { IoMdCloseCircleOutline } from 'react-icons/io';
-import CardSlider from '../../components/cardSlider';
+import { IoMdClose } from 'react-icons/io';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { motion } from 'framer-motion';
+import SearchBar from '../../components/searchBar';
+import ReviewsCard from '../../components/reviewsCard';
+import AddReview from '../../components/addreview';
+import CardSlider from '../../components/cardSlider';
 
 export default function Home() {
-    const [modleOpen, setModleOpen] = useState(false);
+    const [modalOpen, setModalOpen] = useState(false);
     const navigate = useNavigate();
     const [reviews, setReviews] = useState([]);
-    const [state, setState] = useState("loading");
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        if (state === "loading") {
-            axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/reviews`)
-                .then((res) => {
-                    //console.log(res.data);
-                    setReviews(res.data);
-                    setState("success");
-                })
-                .catch((err) => {
-                    toast.error(err?.response?.data?.error || "An error occurred");
-                    setState("error");
-                });
-        }
-    })
+        const fetchReviews = async () => {
+            try {
+                const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/reviews`);
+                setReviews(response.data.filter(review => review.status === 'Approved').slice(0, 3));
+            } catch (err) {
+                toast.error(err?.response?.data?.error || "Failed to load reviews");
+            } finally {
+                setLoading(false);
+            }
+        };
 
+        fetchReviews();
+    }, []);
 
     const handleSearch = (query) => {
-        // console.log("Search term:", query);
         navigate(`/items?search=${query}`);
     };
 
+    const categories = [
+        "Microphones", "Mixers", "Speakers", "Amplifiers", 
+        "Wireless Mics", "DJ Gear", "Lighting", "Accessories"
+    ];
+
     return (
-        <div className="w-full h-full">
-
+        <div className="w-full min-h-screen bg-gray-50">
             {/* Hero Section */}
-            <div className="hero-bg-picture w-full h-[550px] md:h-[350px]  flex flex-col items-center justify-center">
-                <div className="w-full h-full bg-black/50 flex flex-col items-center justify-center px-[20px] pt-[20px]">
-
-                    <h1 className="text-5xl font-bold text-white text-center">Premium Audio Rentals for Every Event</h1>
-                    <p className="text-white text-center text-2xl">From studio mics to festival speakers,we’ve got you covered.</p>
-
-                    <div className='flex flex-col sm:flex-row sm:gap-10'>
-                        <Link to="/items" className="w-[200px] h-[50px] bg-blue-900 text-white px-5 py-2 rounded-lg hover:bg-accent transition-transform transform hover:scale-105 mt-5 text-center text-2xl"> Order Now</Link>
-                        <Link to="/contact" className="w-[200px] h-[50px] bg-blue-900 text-white px-5 py-2 rounded-lg hover:bg-accent transition-transform transform hover:scale-105 mt-5 text-center text-2xl">
-                            Contact Us
-                        </Link>
-                    </div>
+            <div className="relative w-full h-[70vh] min-h-[500px] bg-gray-900 overflow-hidden">
+                <div className="absolute inset-0 bg-[url('/hero-bg.jpg')] bg-cover bg-center opacity-70" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-black/50 flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8 }}
+                        className="text-center max-w-4xl"
+                    >
+                        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4">
+                            Premium Audio Rentals for Every Event
+                        </h1>
+                        <p className="text-xl sm:text-2xl text-gray-200 mb-8">
+                            From studio mics to festival speakers, we've got you covered.
+                        </p>
+                        <div className="flex flex-col sm:flex-row justify-center gap-4">
+                            <Link 
+                                to="/items" 
+                                className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg text-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
+                            >
+                                Order Now
+                            </Link>
+                            <Link 
+                                to="/contact" 
+                                className="px-8 py-3 bg-transparent border-2 border-white text-white hover:bg-white hover:text-gray-900 font-medium rounded-lg text-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
+                            >
+                                Contact Us
+                            </Link>
+                        </div>
+                    </motion.div>
                 </div>
             </div>
 
             {/* Product Section */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h1 className="text-3xl font-bold text-purple-900 mb-8 text-center mt-10">Featured Products</h1>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                <h1 className="text-3xl font-bold text-gray-800 mb-12 text-center">
+                    Featured Products
+                </h1>
 
-                {/* Search and Filter Section for laptop */}
-                <div className="flex flex-col md:flex-row">
-                    <div className="w-full md:W-[49%]">
-                        <div className="p-4">
+                <div className="flex flex-col lg:flex-row gap-8">
+                    {/* Search and Categories */}
+                    <div className="w-full lg:w-1/3">
+                        <div className="mb-8">
                             <SearchBar onSearch={handleSearch} />
                         </div>
-                        <div className="p-4">
-                            <div className='flex flex-col justify-center items-center px-3' >
-                                <h2 className="text-3xl font-bold text-purple-900  text-center mt-5 cursor-pointer">All Categories</h2>
-                                <Link to="/items?category=Microphones" className="w-full h-[45px] bg-accent text-white px-5 py-2 rounded-lg hover:bg-blue-900 transition-transform transform hover:scale-105 mt-5 text-center text-xl cursor-pointer">
-                                    Microphones
-                                </Link>
-                                <Link to="/items?category=Mixers" className="w-full h-[45px] bg-accent text-white px-5 py-2 rounded-lg hover:bg-blue-900 transition-transform transform hover:scale-105 mt-1 text-center text-xl cursor-pointer">
-                                    Mixers
-                                </Link>
-                                <Link to="/items?category=Speakers" className='w-full h-[45px] bg-accent text-white px-5 py-2 rounded-lg hover:bg-blue-900 transition-transform transform hover:scale-105 mt-1 text-center text-xl cursor-pointer'>
-                                    Speakers
-                                </Link>
-                                <Link to="/items?category=Amplifiers" className='w-full h-[45px] bg-accent text-white px-5 py-2 rounded-lg hover:bg-blue-900 transition-transform transform hover:scale-105 mt-1 text-center text-xl cursor-pointer'>
-                                    Amplifiers
-                                </Link>
-                                <Link to="/items?category=Wireless Mics" className='w-full h-[45px] bg-accent text-white px-5 py-2 rounded-lg hover:bg-blue-900 transition-transform transform hover:scale-105 mt-1 text-center text-xl cursor-pointer'>
-                                    Wireless Mics
-                                </Link>
-                                <Link to="/items?category=DJ Gear" className='w-full h-[45px] bg-accent text-white px-5 py-2 rounded-lg hover:bg-blue-900 transition-transform transform hover:scale-105 mt-1 text-center text-xl cursor-pointer'>
-                                    DJ Gear
-                                </Link>
-                                <Link to="/items?category=Lighting" className='w-full h-[45px] bg-accent text-white px-5 py-2 rounded-lg hover:bg-blue-900 transition-transform transform hover:scale-105 mt-1 text-center text-xl cursor-pointer'>
-                                    Lighting
-                                </Link>
-                                <Link to="/items?category=Accessories" className='w-full h-[45px] bg-accent text-white px-5 py-2 rounded-lg hover:bg-blue-900 transition-transform transform hover:scale-105 mt-1 text-center text-xl cursor-pointer'>
-                                    Accessories
-                                </Link>
+                        
+                        <div className="bg-white rounded-xl shadow-md p-6">
+                            <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+                                All Categories
+                            </h2>
+                            <div className="grid grid-cols-1 gap-3">
+                                {categories.map((category) => (
+                                    <Link 
+                                        key={category}
+                                        to={`/items?category=${encodeURIComponent(category)}`}
+                                        className="px-4 py-3 bg-gray-100 hover:bg-blue-600 hover:text-white text-gray-800 font-medium rounded-lg transition-all duration-300"
+                                    >
+                                        {category}
+                                    </Link>
+                                ))}
                             </div>
                         </div>
-
-
                     </div>
 
                     {/* Card Slider */}
-                    <div className="w-full md:W-[49%] "><CardSlider /></div>
+                    <div className="w-full lg:w-2/3">
+                        <CardSlider />
+                    </div>
                 </div>
             </div>
 
             {/* Reviews Section */}
-            <div className="max-w-7xl mx-auto">
-                <h2 className="text-3xl font-bold text-purple-900 text-center m-5">Customer Reviews</h2>
-                <div className="flex">
-
-                    <div className="flex justify-center items-end w-[49%] relative">
-                        <div className="flex justify-center items-center">
-                            <img src="/system.png" alt="system" />
-                        </div>
-                        <button
-                            onClick={() => setModleOpen(true)}
-                            className="h-[45px] bg-accent/50 text-white px-5 py-2 rounded-lg hover:bg-blue-900 transition-transform transform hover:scale-105 mt-5 text-center text-xl cursor-pointer absolute mb-5">Add your comment</button>
+            <div className="bg-gray-100 py-16">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="text-center mb-12">
+                        <h2 className="text-3xl font-bold text-gray-800 mb-3">
+                            Customer Reviews
+                        </h2>
+                        <p className="text-lg text-gray-600">
+                            What our customers say about us
+                        </p>
                     </div>
-                    <div className="flex flex-col justify-center items-center w-[49%] px-11 bg-amber-300">
-                        {reviews.map((review) => {
-                            return <ReviewsCard key={review._id} review={review} />
-                        })}
+
+                    <div className="flex flex-col lg:flex-row gap-8 items-center">
+                        <div className="w-full lg:w-1/2 flex justify-center">
+                            <motion.div 
+                                initial={{ opacity: 0, x: -50 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                transition={{ duration: 0.5 }}
+                                className="relative"
+                            >
+                                <img 
+                                    src="/system.png" 
+                                    alt="Audio System" 
+                                    className="max-h-[400px] object-contain"
+                                />
+                                <button
+                                    onClick={() => setModalOpen(true)}
+                                    className="absolute bottom-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow-lg transition-all duration-300 hover:scale-105"
+                                >
+                                    Add Your Review
+                                </button>
+                            </motion.div>
+                        </div>
+
+                        <div className="w-full lg:w-1/2 space-y-6">
+                            {loading ? (
+                                <div className="flex justify-center">
+                                    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+                                </div>
+                            ) : reviews.length > 0 ? (
+                                reviews.map((review, index) => (
+                                    <motion.div
+                                        key={review._id}
+                                        initial={{ opacity: 0, y: 50 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: index * 0.1, duration: 0.5 }}
+                                        viewport={{ once: true }}
+                                    >
+                                        <ReviewsCard review={review} />
+                                    </motion.div>
+                                ))
+                            ) : (
+                                <p className="text-center text-gray-500">No reviews yet. Be the first to review!</p>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
 
-
-            {/* add review Section */}
-            {modleOpen && <div className="w-full h-full bg-[#000000a9] mx-auto flex fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 justify-center items-center">
-                <div className=" flex  items-center relative">
-                    <IoMdCloseCircleOutline className="absolute top-2 right-2 text-3xl cursor-pointer hover:text-red-700 z-52" onClick={() => setModleOpen(false)} />
-                    <AddReview />
+            {/* Add Review Modal */}
+            {modalOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+                    <motion.div 
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="relative bg-white rounded-xl shadow-2xl max-w-md w-full mx-4"
+                    >
+                        <button
+                            onClick={() => setModalOpen(false)}
+                            className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+                        >
+                            <IoMdClose className="h-6 w-6" />
+                        </button>
+                        <AddReview onSuccess={() => {
+                            setModalOpen(false);
+                            setLoading(true);
+                            axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/reviews`)
+                                .then((res) => {
+                                    setReviews(res.data.filter(review => review.status === 'Approved').slice(0, 3));
+                                })
+                                .catch((err) => {
+                                    toast.error(err?.response?.data?.error || "Failed to refresh reviews");
+                                })
+                                .finally(() => {
+                                    setLoading(false);
+                                });
+                        }} />
+                    </motion.div>
                 </div>
-            </div>}
-            
+            )}
         </div>
-    )
+    );
 }

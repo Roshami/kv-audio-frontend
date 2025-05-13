@@ -38,7 +38,6 @@ export default function Header() {
                         alt="logo"
                         className="w-12 h-12 sm:w-14 sm:h-14 object-cover rounded-full border-2 border-white/30"
                     />
-                    <span className="hidden sm:block text-xl font-bold">YourBrand</span>
                 </Link>
 
                 {/* Desktop Navigation */}
