@@ -93,6 +93,13 @@ export default function AdminReviewPage() {
         }
     };
 
+    const wordLimit = (text, limit) => {
+        if (text.length > limit) {
+            return text.substring(0, limit) + '...';
+        }
+        return text;
+    };
+
     if (loading) {
         return (
             <div className="flex items-center justify-center min-h-screen">
@@ -155,7 +162,7 @@ export default function AdminReviewPage() {
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 hidden md:table-cell">
-                                                <div className="line-clamp-2">{review.comment}</div>
+                                                <div className="line-clamp-2 ">{wordLimit(review.comment, 40)}</div>
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap">
                                                 <div className="flex">

@@ -1,0 +1,8 @@
+.bg-contact-picture{
+    background-image: url('/contact.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    position: relative;
+}
