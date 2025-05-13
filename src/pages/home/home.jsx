@@ -35,7 +35,7 @@ export default function Home() {
     };
 
     const categories = [
-        "Microphones", "Mixers", "Speakers", "Amplifiers", 
+        "Microphones", "Mixers", "Speakers", "Amplifiers",
         "Wireless Mics", "DJ Gear", "Lighting", "Accessories"
     ];
 
@@ -44,7 +44,7 @@ export default function Home() {
             {/* Hero Section */}
             <section className="relative w-full h-[70vh] min-h-[500px] bg-[url('/hero-bg.jpg')] bg-cover bg-center">
                 <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center px-6 text-center">
-                    <motion.h1 
+                    <motion.h1
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
@@ -60,20 +60,20 @@ export default function Home() {
                     >
                         We've got you covered from studio mics to festival speakers.
                     </motion.p>
-                    <motion.div 
+                    <motion.div
                         className="flex flex-col sm:flex-row gap-4"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 0.6, duration: 0.8 }}
                     >
-                        <Link 
-                            to="/items" 
+                        <Link
+                            to="/items"
                             className="px-8 py-3 bg-blue-700 hover:bg-blue-800 text-white text-lg font-medium rounded-lg transition-all duration-300 hover:scale-105 shadow-lg"
                         >
                             Order Now
                         </Link>
-                        <Link 
-                            to="/contact" 
+                        <Link
+                            to="/contact"
                             className="px-8 py-3 bg-transparent border-2 border-white text-white text-lg font-medium rounded-lg transition-all duration-300 hover:bg-white hover:text-blue-900 hover:scale-105"
                         >
                             Contact Us
@@ -84,7 +84,7 @@ export default function Home() {
 
             {/* Product Section */}
             <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-                <motion.h2 
+                <motion.h2
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     transition={{ duration: 0.6 }}
@@ -97,7 +97,7 @@ export default function Home() {
                 <div className="flex flex-col lg:flex-row gap-8">
                     {/* Search and Categories */}
                     <div className="w-full lg:w-1/3">
-                        <motion.div 
+                        <motion.div
                             initial={{ opacity: 0, x: -20 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.6 }}
@@ -164,9 +164,9 @@ export default function Home() {
                         viewport={{ once: true }}
                         className="w-full lg:w-1/2 flex flex-col items-center justify-end relative"
                     >
-                        <img 
-                            src="/system.png" 
-                            alt="Audio System" 
+                        <img
+                            src="/system.png"
+                            alt="Audio System"
                             className="w-full max-w-md object-contain"
                         />
                         <button
@@ -192,16 +192,20 @@ export default function Home() {
                         ) : (
                             <div className="space-y-6 max-h-[600px] overflow-y-auto pr-2">
                                 <AnimatePresence>
-                                    {reviews.map((review, index) => (
-                                        <motion.div
-                                            key={review._id}
-                                            initial={{ opacity: 0, y: 20 }}
-                                            animate={{ opacity: 1, y: 0 }}
-                                            transition={{ delay: index * 0.1 }}
-                                        >
-                                            <ReviewsCard review={review} />
-                                        </motion.div>
-                                    ))}
+                                    {reviews
+                                        .slice() // create a copy to avoid mutating original array
+                                        .sort((a, b) => new Date(b.date) - new Date(a.date)) // sort descending: latest first
+                                        .map((review, index) => (
+                                            <motion.div
+                                                key={review._id}
+                                                initial={{ opacity: 0, y: 20 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                transition={{ delay: index * 0.1 }}
+                                            >
+                                                <ReviewsCard review={review} />
+                                            </motion.div>
+                                        ))
+                                    }
                                 </AnimatePresence>
                             </div>
                         )}
