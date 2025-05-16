@@ -23,10 +23,10 @@ export default function Gallery() {
                     transition={{ duration: 0.5 }}
                     className="text-center mb-12"
                 >
-                    <h2 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-3">
+                    <h2 className="text-3xl sm:text-4xl font-bold text-purple-800 mb-3">
                         Our Customer Gallery
                     </h2>
-                    <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                    <p className="text-lg text-purple-600 max-w-2xl mx-auto">
                         Capturing memorable moments from our valued customers
                     </p>
                 </motion.div>

@@ -120,7 +120,7 @@ export default function AdminReviewPage() {
         <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
             <div className="max-w-7xl mx-auto">
                 <div className="flex justify-between items-center mb-8">
-                    <h1 className="text-2xl font-bold text-gray-800">Reviews Management</h1>
+                    <h1 className="text-2xl font-bold text-purple-800">Reviews Management</h1>
                 </div>
 
                 <div className="bg-white shadow rounded-lg overflow-hidden">

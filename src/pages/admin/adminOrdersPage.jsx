@@ -59,10 +59,19 @@ export default function AdminOrdersPage() {
         })
     }
 
+    const getStatusColor = (status) => {
+        switch (status) {
+            case 'Approved': return 'bg-green-100 text-green-800';
+            case 'Rejected': return 'bg-red-100 text-red-800';
+            case 'Pending': return 'bg-yellow-100 text-yellow-800';
+            default: return 'bg-gray-100 text-gray-800';
+        }
+    };
+
 
     return (
         <div className="w-full h-full p-6">
-            <h1 className="text-2xl font-bold mb-6">Orders Management</h1>
+            <h1 className="text-2xl text-purple-800 font-bold mb-6">Orders Management</h1>
 
             {loading ? (
                 <div className="flex justify-center items-center h-64">
@@ -98,7 +107,7 @@ export default function AdminOrdersPage() {
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{formatDate(order.startingDate)}</td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{formatDate(order.endingDate)}</td>
                                     <td className="px-6 py-4 whitespace-nowrap">
-                                        <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${order.status ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`}>
+                                        <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(order.status)}`}>
                                             {order.status}
                                         </span>
                                     </td>
