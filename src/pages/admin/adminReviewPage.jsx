@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { FiChevronLeft, FiChevronRight, FiRefreshCw, FiSearch } from 'react-icons/fi';
 import { IoMdClose } from 'react-icons/io';
+import LoadingSpinner from '../../components/loadingSpinner';
 
 export default function AdminReviewPage() {
   const [reviews, setReviews] = useState([]);
@@ -121,7 +122,7 @@ export default function AdminReviewPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+        <LoadingSpinner />
       </div>
     );
   }

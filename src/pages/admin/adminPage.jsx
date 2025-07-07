@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { FiMenu } from "react-icons/fi";
 import { GoCommentDiscussion } from "react-icons/go";
 import AdminReviewPage from "./adminReviewPage";
+import LoadingSpinner from "../../components/loadingSpinner";
 
 export default function AdminPage() {
   const [userValidated, setUserValidated] = useState(false);
@@ -49,7 +50,7 @@ export default function AdminPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-50">
-        <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+        <LoadingSpinner />
       </div>
     );
   }

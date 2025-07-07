@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { FiChevronLeft, FiChevronRight, FiRefreshCw, FiSearch } from 'react-icons/fi';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
+import LoadingSpinner from '../../components/loadingSpinner';
 
 export default function AdminOrdersPage() {
   const [orders, setOrders] = useState([]);
@@ -166,7 +167,7 @@ export default function AdminOrdersPage() {
 
           {loading ? (
             <div className="flex justify-center items-center h-64">
-              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+              <LoadingSpinner />
             </div>
           ) : (
             <div className="overflow-x-auto bg-white rounded-lg shadow">

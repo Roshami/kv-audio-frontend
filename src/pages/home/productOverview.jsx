@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import ImageSlider from "../../components/imageSlider";
 import { addToCart, loadCart } from "../../utils/cart";
 import toast from "react-hot-toast";
+import LoadingSpinner from "../../components/loadingSpinner";
 
 export default function ProductOverview() {
     const { key } = useParams();
@@ -37,7 +38,7 @@ export default function ProductOverview() {
     if (loadingStatus === "loading") {
         return (
             <div className="flex items-center justify-center min-h-screen">
-                <div className="w-12 h-12 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
+                <LoadingSpinner />
             </div>
         );
     }

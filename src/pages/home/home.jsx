@@ -8,6 +8,7 @@ import { IoMdClose } from 'react-icons/io';
 import CardSlider from '../../components/cardSlider';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import LoadingSpinner from '../../components/loadingSpinner';
 
 export default function Home() {
     const [modalOpen, setModalOpen] = useState(false);
@@ -187,7 +188,7 @@ export default function Home() {
                     >
                         {loading ? (
                             <div className="flex justify-center items-center h-64">
-                                <div className="w-12 h-12 border-4 border-purple-500 border-t-transparent rounded-full animate-spin"></div>
+                                <LoadingSpinner />
                             </div>
                         ) : (
                             <div className="space-y-6 max-h-[600px] overflow-y-auto pr-2">

@@ -8,6 +8,7 @@ import {
   FiSearch,
 } from 'react-icons/fi';
 import { Link, useNavigate } from 'react-router-dom';
+import LoadingSpinner from '../../components/loadingSpinner';
 
 export default function AdminItemPage() {
   const [items, setItems] = useState([]);
@@ -68,7 +69,7 @@ export default function AdminItemPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[50vh]">
-        <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+        <LoadingSpinner />
       </div>
     );
   }
