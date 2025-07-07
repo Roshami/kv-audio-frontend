@@ -67,7 +67,7 @@ export default function AdminPage() {
       {/* Sidebar */}
       <div className={`${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'} 
         md:translate-x-0 transform transition-transform duration-300 ease-in-out
-        fixed md:static inset-y-0 left-0 w-64 bg-accent text-white z-40 `}
+        fixed md:static inset-y-0 left-0  w-64 bg-accent text-white z-40 `}
       >
         <div className="flex flex-col h-full p-4 scroll-auto">
 
