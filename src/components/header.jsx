@@ -102,14 +102,7 @@ export default function Header() {
                                             {userData?.email}
                                         </p>
                                     </div>
-                                    <Link
-                                        to="/profile"
-                                        onClick={() => setIsDropdownOpen(false)}
-                                        className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                    >
-                                        <FiUser className="mr-2" />
-                                        Profile
-                                    </Link>
+                                    
                                     <button
                                         onClick={handleLogout}
                                         className="w-full flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -164,14 +157,7 @@ export default function Header() {
                                             {userData?.email}
                                         </p>
                                     </div>
-                                    <Link
-                                        to="/profile"
-                                        onClick={() => setIsDropdownOpen(false)}
-                                        className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                                    >
-                                        <FiUser className="mr-2" />
-                                        Profile
-                                    </Link>
+                                    
                                     <button
                                         onClick={handleLogout}
                                         className="w-full flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"

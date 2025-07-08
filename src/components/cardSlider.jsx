@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import { BiChevronLeft, BiChevronRight } from 'react-icons/bi';
+import LoadingSpinner from "./loadingSpinner";
 
 // Import Swiper styles
 import 'swiper/css';
