@@ -115,9 +115,7 @@ export default function LoginPage() {
                 className="w-full py-3 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-lg transition-colors duration-300 flex items-center justify-center"
               >
                 {isLoading ? (
-                  <div className="flex justify-center items-center h-64">
-                    <LoadingSpinner />
-                  </div>
+                 <span className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
                 ) : (
                   'Login'
                 )}
