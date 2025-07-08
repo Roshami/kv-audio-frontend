@@ -13,6 +13,7 @@ import { FiMenu } from "react-icons/fi";
 import { GoCommentDiscussion } from "react-icons/go";
 import AdminReviewPage from "./adminReviewPage";
 import LoadingSpinner from "../../components/loadingSpinner";
+import AdminDashboard from "./adminDashboard";
 
 export default function AdminPage() {
   const [userValidated, setUserValidated] = useState(false);
@@ -151,6 +152,7 @@ export default function AdminPage() {
       <div className="flex-1 overflow-auto p-6">
         {userValidated && (
           <Routes>
+            <Route path="/" element={<AdminDashboard />} />
             <Route path="/orders" element={<AdminOrdersPage />} />
             <Route path="/users" element={<AdminUsersPage />} />
             <Route path="/items" element={<AdminItemPage />} />

@@ -25,7 +25,7 @@ export default function AdminOrdersPage() {
           },
         })
         .then((res) => {
-          console.log(res.data);
+          //console.log(res.data);
           setOrders(res.data);
           setLoading(false);
         })
