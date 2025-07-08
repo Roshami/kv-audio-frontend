@@ -76,10 +76,10 @@ export default function Items() {
           transition={{ duration: 0.5 }}
           className="mb-12"
         >
-          <h1 className="text-3xl sm:text-4xl mt-5 font-bold text-center text-purple-800 mb-2">
+          <h1 className="text-3xl sm:text-4xl mt-5 font-bold text-center text-blue-800 mb-2">
             Our Products
           </h1>
-          <p className="text-center text-purple-600 max-w-2xl mx-auto">
+          <p className="text-center text-blue-600 max-w-2xl mx-auto">
             Discover high-quality audio equipment for every need
           </p>
         </motion.div>
@@ -98,14 +98,14 @@ export default function Items() {
             <div className="flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-4">
               <label
                 htmlFor="category"
-                className="block text-sm sm:text-base font-medium text-purple-700"
+                className="block text-sm sm:text-base font-medium text-blue-700"
               >
                 Category
               </label>
               <select
                 id="category"
                 name="category"
-                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-purple-500 focus:border-purple-500 text-sm sm:text-base"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm sm:text-base"
                 onChange={(e) => setCategory(e.target.value)}
                 value={category}
               >
@@ -142,7 +142,7 @@ export default function Items() {
             </p>
             <motion.button
               onClick={() => setState('loading')}
-              className="px-6 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors cursor-pointer shadow-md"
+              className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors cursor-pointer shadow-md"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -184,7 +184,7 @@ export default function Items() {
                 <div className="bg-white p-8 rounded-lg shadow-md inline-block">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-16 w-16 mx-auto text-purple-400 mb-4"
+                    className="h-16 w-16 mx-auto text-blue-400 mb-4"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"

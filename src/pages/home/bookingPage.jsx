@@ -75,7 +75,7 @@ export default function BookingPage() {
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8 md:pt-[60px]">
       <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-md overflow-hidden p-6">
-        <h1 className="text-2xl md:text-3xl font-bold text-purple-800 mb-6 text-center">
+        <h1 className="text-2xl md:text-3xl font-bold text-blue-800 mb-6 text-center">
           Create Booking
         </h1>
 

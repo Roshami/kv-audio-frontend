@@ -90,7 +90,7 @@ export default function Home() {
                     whileInView={{ opacity: 1 }}
                     transition={{ duration: 0.6 }}
                     viewport={{ once: true }}
-                    className="text-3xl font-bold text-purple-900 mb-12 text-center"
+                    className="text-3xl font-bold text-blue-900 mb-12 text-center"
                 >
                     Featured Products
                 </motion.h2>
@@ -115,13 +115,13 @@ export default function Home() {
                             viewport={{ once: true }}
                             className="bg-white p-6 rounded-xl shadow-md"
                         >
-                            <h3 className="text-2xl font-bold text-purple-900 mb-6 text-center">All Categories</h3>
+                            <h3 className="text-2xl font-bold text-blue-900 mb-6 text-center">All Categories</h3>
                             <div className="grid grid-cols-1 gap-3">
                                 {categories.map((category, index) => (
                                     <Link
                                         key={category}
                                         to={`/items?category=${category}`}
-                                        className="px-4 py-3 bg-purple-100 hover:bg-purple-700 hover:text-white text-purple-900 font-medium rounded-lg transition-all duration-300 hover:scale-[1.02] text-center"
+                                        className="px-4 py-3 bg-blue-100 hover:bg-blue-700 hover:text-white text-blue-900 font-medium rounded-lg transition-all duration-300 hover:scale-[1.02] text-center"
                                     >
                                         {category}
                                     </Link>
@@ -144,7 +144,7 @@ export default function Home() {
             </section>
 
             {/* Reviews Section */}
-            <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-purple-50">
+            <section className="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-blue-50">
                 <motion.div
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
@@ -152,8 +152,8 @@ export default function Home() {
                     viewport={{ once: true }}
                     className="text-center mb-12"
                 >
-                    <h2 className="text-3xl font-bold text-purple-900 mb-4">Customer Reviews</h2>
-                    <p className="text-lg text-purple-700">What our customers say about us</p>
+                    <h2 className="text-3xl font-bold text-blue-900 mb-4">Customer Reviews</h2>
+                    <p className="text-lg text-blue-700">What our customers say about us</p>
                 </motion.div>
 
                 <div className="flex flex-col lg:flex-row gap-8">
@@ -172,7 +172,7 @@ export default function Home() {
                         />
                         <button
                             onClick={() => setModalOpen(true)}
-                            className="mt-8 px-6 py-3 bg-purple-700 hover:bg-purple-800 text-white font-medium rounded-lg transition-all duration-300 hover:scale-105 shadow-lg"
+                            className="mt-8 px-6 py-3 bg-blue-700 hover:bg-blue-800 text-white font-medium rounded-lg transition-all duration-300 hover:scale-105 shadow-lg"
                         >
                             Add Your Review
                         </button>

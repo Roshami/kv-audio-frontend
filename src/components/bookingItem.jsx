@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { addToCart, removeFromCart } from "../utils/cart";
 import { FaArrowDown, FaArrowUp, FaTrash } from "react-icons/fa6";
 import { toast } from "react-hot-toast";
+import LoadingSpinner from "./loadingSpinner";
 
 export default function BookingItem({ itemKey, qty, refresh }) {
     const [item, setItem] = useState(null);
@@ -50,7 +51,7 @@ export default function BookingItem({ itemKey, qty, refresh }) {
     if (status === "loading") {
         return (
             <div className="flex items-center justify-center p-4 bg-white rounded-lg shadow-sm border border-gray-200">
-                <div className="w-8 h-8 border-4 border-gray-200 border-t-blue-500 rounded-full animate-spin"></div>
+                <LoadingSpinner />
             </div>
         );
     }

@@ -32,7 +32,9 @@ export default function CardSlider() {
     }, [state]);
 
     if (state === "loading") {
-        return <div className="text-center py-12">Loading products...</div>;
+        return <div className="flex justify-center items-center h-64">
+                      <LoadingSpinner />
+                    </div>;
     }
 
     if (state === "error") {
